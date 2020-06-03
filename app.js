@@ -9,15 +9,15 @@ const app = express();
 app.use(morgon('dev'));
 app.use('/api',route);
 
-/* Header Concept
+/* Header Concept */
 app.use((req,resp,next)=>{
     resp.header("Access-Control-Allow-Headers","*");
     resp.header("Access-Control-Allow-Origin","*");
 
     //resp.header("Access-Control-Allow-Methods","GET, POST");
-})*/
+})
 
-// Error handaling 
+// Error handaling 🔥
 app.use((req,resp,next)=>{
 
     var error = new Error("Not Found");
