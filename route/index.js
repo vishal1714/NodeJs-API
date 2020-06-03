@@ -48,14 +48,14 @@ router.get('/city',(req,resp)=>{
 })
 
 // Pots Simple No DB
-router.post('/addcity',(req,resp,next)=>{
+router.post('/addcity',async (req,resp,next)=>{
     const addcity = {
     Name: req.body.Name,
     CountryCode: req.body.CountryCode,
     District: req.body.District,
     Population: req.body.Population
     }
-    
+    var apikey = req.query.APIKey;
     
     conn.query("INSERT INTO city SET ?",[addcity],(err,result)=>{
         console.log(err);
@@ -68,16 +68,13 @@ router.post('/addcity',(req,resp,next)=>{
             Status : "S",
             Data : addcity
         })
-    })
-    
-    /*
-    resp.status(200).json({
+        /* Without Database
+        resp.status(200).json({
         message: "Successful",
         Insterted : addcity
-    })*/
-
+        })*/
+    })
+    
 })
-
-
 
 module.exports = router;
