@@ -145,5 +145,12 @@ router.delete("/city/:id", (req, resp) => {
   );
 });
 
+
+router.get("/pillu", (req, resp, next) => {
+  resp.json({
+    "Message to my Yedu": "Love U so Much Pillu 💑",
+  });
+});
+
 module.exports = router;
 
