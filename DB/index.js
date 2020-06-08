@@ -4,7 +4,7 @@ const mysql = require('mysql');
 var conn = mysql.createConnection({
     database: 'API',
     user: 'admin',
-    password: 'Vishal@9930',
+    password: 'Password',
     host: 'localhost',
     multipleStatements: true
 })
@@ -14,7 +14,7 @@ var conn = mysql.createConnection({
 var conn = mysql.createConnection({
     database: 'API',
     user: 'admin',
-    password: 'Vishal@9930',
+    password: 'Password',
     host: '192.168.0.13',
     port: 3306,
     multipleStatements: true
