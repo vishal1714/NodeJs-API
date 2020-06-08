@@ -1,20 +1,31 @@
 const mysql = require('mysql');
 
-// DB Connection Variable Creation 
+/* DB Connection Variable Creation */
 var conn = mysql.createConnection({
-    database: 'world',
-    user:'vishal',
-    password:'Vishal@9930',
-    host:'localhost',
-    multipleStatements : true
+    database: 'API',
+    user: 'admin',
+    password: 'Vishal@9930',
+    host: 'localhost',
+    multipleStatements: true
 })
 
+
+/* DB Connection Raspi  192.168.0.13 
+var conn = mysql.createConnection({
+    database: 'API',
+    user: 'admin',
+    password: 'Vishal@9930',
+    host: '192.168.0.13',
+    port: 3306,
+    multipleStatements: true
+})*/
+
 // DB Connevtion Check
-conn.connect((err)=>{
-    if(err)
-    console.log('DB is not Connected');
+conn.connect((err) => {
+    if (err)
+        console.log('DB is not Connected' + err);
     else
-    console.log('DB Connected');
+        console.log('DB Connected');
 })
 
 module.exports = conn;
