@@ -184,4 +184,42 @@ router.delete("/city/:id", (req, resp, next) => {
   }
 });
 
+//Update City by ID using Request Body
+router.patch("/city", (req, resp, next) => {
+  var reqKey = req.header("Key");
+  var ValidKey = "Vishal1714";
+  const updateCity = {
+    Name: req.body.Name,
+    CountryCode: req.body.CountryCode,
+    District: req.body.District,
+    Population: req.body.Population,
+  };
+  var sqlq = "UPDATE city SET ? WHERE id = ?";
+  //Key Validation
+  if (reqKey == ValidKey) {
+    conn.query(sqlq, [updateCity, req.body.ID], (err, result) => {
+      if (err) {
+        next(new Error(err));
+      } else if (req.body.ID == null) {
+        next(new Error("City ID not found in Request Body"));
+      } else {
+        resp.status(200).json({
+          Status: "S",
+          Time: day,
+          ID: req.body.ID,
+          Info: updateCity,
+        });
+      }
+    });
+  } else {
+    //If API Key is Invalid
+    //next(new Error("Invalid API Key"));
+    resp.status(401).json({
+      Error: {
+        message: "Invalid API Key",
+      },
+    });
+  }
+});
+
 module.exports = router;
