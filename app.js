@@ -9,15 +9,14 @@ const app = express();
 app.use(morgon("dev"));
 app.use("/api", route);
 
-/*   Headear Concept */
+/*   Headear Concept 
 app.use((req, resp, next) => {
-  resp.header("API-Key", "1714");
   resp.header("Access-Control-Allow-Headers", "*");
   resp.header("Access-Control-Allow-Origin", "*");
   resp.removeHeader("X-Powered-By", "*");
   req.header("Access-Control-Allow-Methods", "GET, POST");
   next();
-});
+});*/
 
 // Error handaling 🔥
 app.use((req, resp, next) => {
@@ -36,7 +35,7 @@ app.use((error, req, resp, next) => {
 });
 
 // Web server start
-app.listen(process.env.PORT || 80, () => {
+app.listen(process.env.PORT || 8081, () => {
   console.log("Web Server is started.. 8080");
 });
 
