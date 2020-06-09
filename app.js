@@ -9,7 +9,7 @@ const app = express();
 app.use(morgon("dev"));
 app.use("/api", route);
 
-/*   Headear Concept 
+/*   Headear Concept x
 app.use((req, resp, next) => {
   resp.header("Access-Control-Allow-Headers", "*");
   resp.header("Access-Control-Allow-Origin", "*");
@@ -34,8 +34,5 @@ app.use((error, req, resp, next) => {
   });
 });
 
-// Web server start
-app.listen(process.env.PORT || 8081, () => {
-  console.log("Web Server is started.. 8080");
-});
+module.exports = app;
 
