@@ -2,7 +2,7 @@ const express = require("express");
 //const url = require('url');
 const conn = require("../DB");
 const bodyparser = require("body-parser");
-var dateFormat = require("dateformat");
+const dateFormat = require("dateformat");
 
 const router = express.Router();
 router.use(bodyparser.json());
@@ -13,7 +13,7 @@ var day = dateFormat(new Date(), "yyyy-mm-dd h:MM:ss TT");
 router.get("/citys", (req, resp, next) => {
   conn.query("SELECT * FROM city", (err, result) => {
     if (err) {
-      console.log(err);
+      //console.log(err);
       next(new Error(err));
     } else {
       var Count = result.length;
@@ -90,41 +90,60 @@ router.get("/city", (req, resp, next) => {
 
 // Pots Add new City
 router.post("/addcity", (req, resp, next) => {
+  // Request Body in variables
   const addcity = {
     Name: req.body.Name,
     CountryCode: req.body.CountryCode,
     District: req.body.District,
     Population: req.body.Population,
   };
-  var apikey = req.query.APIKey;
-  conn.query("INSERT INTO city SET ?", [addcity], (err, result) => {
-    //console.log(err);
-    if (err) {
-      resp.status(500).json({
-        error: "Database Error , Contact Admin for more info ",
-        Info: err,
-      });
-      console.log(day + "DB Error Post ==>" + JSON.stringify(err));
-    } else {
-      resp.status(200).json({
-        Status: "S",
-        Time: day,
-        Inserted: addcity,
-      });
-      /* Without Database
+  // Variable for API Key Validation
+  var reqKey = req.header("Key");
+  var ValidKey = "Vishal1714";
+
+  //Adding City Login
+  if (reqKey == ValidKey) {
+    conn.query("INSERT INTO city SET ?", [addcity], (err, result) => {
+      //console.log(err);
+      if (err) {
+        resp.status(500).json({
+          error: "Database Error , Contact Admin for more info ",
+          Info: err,
+        });
+        console.log(day + "DB Error Post ==>" + JSON.stringify(err));
+      } else {
+        resp.status(200).json({
+          Status: "S",
+          Time: day,
+          Inserted: addcity,
+        });
+        /* Without Database
             resp.status(200).json({
             message: "Successful",
             Insterted : addcity
             })*/
-    }
-  });
+      }
+    });
+  } else {
+    //If API Key is Invalid
+    //next(new Error("Invalid API Key"));
+    resp.status(401).json({
+      Error: {
+        message: "Invalid API Key",
+      },
+    });
+  }
 });
 
 // Delete City by ID
 router.delete("/city/:id", (req, resp, next) => {
+  //API Key Validation varibale
   var reqKey = req.header("Key");
   var ValidKey = "Vishal1714";
+
+  //Key Validation
   if (reqKey == ValidKey) {
+    //Finding City ID is exist or not
     conn.query(
       "SELECT * FROM city WHERE id = ?",
       [req.params.id],
@@ -135,6 +154,7 @@ router.delete("/city/:id", (req, resp, next) => {
         } else if (result[0] == null) {
           next(new Error("City ID " + req.params.id + " Not Found"));
         } else {
+          //If City ID exist Delete City
           conn.query(
             "DELETE FROM city WHERE id = ?",
             [req.params.id],
@@ -154,6 +174,7 @@ router.delete("/city/:id", (req, resp, next) => {
       }
     );
   } else {
+    //If API Key is Invalid
     //next(new Error("Invalid API Key"));
     resp.status(401).json({
       Error: {
@@ -164,10 +185,3 @@ router.delete("/city/:id", (req, resp, next) => {
 });
 
 module.exports = router;
-
-router.get("/pillu", (req, resp, next) => {
-  resp.json({
-    "Message to my Yedu": "Love U so Much Pillu 💑",
-  });
-});
-
