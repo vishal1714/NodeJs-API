@@ -22,7 +22,6 @@ router.get("/citys", (req, resp, next) => {
         TotalCityCount: Count,
         Citys: result,
       });
-	//resp.send(JSON.stringify(result));
     }
   });
 });
@@ -74,9 +73,9 @@ router.get("/city", (req, resp, next) => {
       }
     });
   } else if (CN != null) {
-    conn.query(sql1, [CN], (err, result) => {
+    conn.query(sql1, CN, (err, result) => {
       if (err) {
-        resp.send(JSON.stringify.err);
+        next(new Error(err));
       } else if (result.length > 0) {
         resp.status(200);
         resp.json(result[0]);
@@ -122,35 +121,53 @@ router.post("/addcity", (req, resp, next) => {
 });
 
 // Delete City by ID
-router.delete("/city/:id", (req, resp) => {
-  conn.query(
-    "DELETE FROM city WHERE id = ?",
-    [req.params.id],
-    (err, result) => {
-      if (err) {
-        console.log(err);
-        resp.status(400).json({
-          error: "Id not found",
-          Details: err,
-        });
-      } else {
-        resp.status(200).json({
-          ID: req.params.id,
-          Status: "S",
-          Time: day,
-          Details: "City Entry has been deleted.",
-        });
+router.delete("/city/:id", (req, resp, next) => {
+  var reqKey = req.header("Key");
+  var ValidKey = "Vishal1714";
+  if (reqKey == ValidKey) {
+    conn.query(
+      "SELECT * FROM city WHERE id = ?",
+      [req.params.id],
+      (err, result) => {
+        if (err) {
+          console.log(err);
+          next(new Error(err));
+        } else if (result[0] == null) {
+          next(new Error("City ID " + req.params.id + " Not Found"));
+        } else {
+          conn.query(
+            "DELETE FROM city WHERE id = ?",
+            [req.params.id],
+            (err, result1) => {
+              if (err) {
+                console.log(err);
+              } else {
+                resp.status(200).json({
+                  Status: "S",
+                  Time: day,
+                  Info: result[0],
+                });
+              }
+            }
+          );
+        }
       }
-    }
-  );
+    );
+  } else {
+    //next(new Error("Invalid API Key"));
+    resp.status(401).json({
+      Error: {
+        message: "Invalid API Key",
+      },
+    });
+  }
 });
 
+module.exports = router;
 
 router.get("/pillu", (req, resp, next) => {
   resp.json({
     "Message to my Yedu": "Love U so Much Pillu 💑",
   });
 });
-
-module.exports = router;
 
