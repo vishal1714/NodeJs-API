@@ -85,6 +85,8 @@ router.get("/city", (req, resp, next) => {
         );
       }
     });
+  } else {
+    next(new Error("Kindly Enter Correct CityName or CountryCode in URI 🔥"));
   }
 });
 
