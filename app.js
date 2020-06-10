@@ -1,6 +1,6 @@
 const express = require("express");
 //const url = require('url');
-const route = require("./route");
+const route = require("./Route");
 const morgon = require("morgan");
 
 const app = express();
@@ -35,4 +35,3 @@ app.use((error, req, resp, next) => {
 });
 
 module.exports = app;
-
