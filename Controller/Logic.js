@@ -114,7 +114,7 @@ exports.POST_AddCity = (req, resp, next) => {
                 */
             } else {
                 var day = dateFormat(new Date(), "yyyy-mm-dd h:MM:ss TT");
-                resp.status(200).json({
+                resp.status(201).json({
                     Status: "S",
                     Time: day,
                     Inserted: addcity,

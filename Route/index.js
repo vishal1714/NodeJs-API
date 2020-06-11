@@ -26,8 +26,3 @@ router.patch("/city", Controller.PATCH_UpdateCityByID);
 
 module.exports = router;
 
-router.get("/pillu", (req, resp, next) => {
-  resp.json({
-    "Message to my Yedu": "Love U so Much Pillu 💑",
-  });
-});
