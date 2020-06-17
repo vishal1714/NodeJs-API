@@ -3,7 +3,7 @@ const mysql = require('mysql');
 /* DB Connection Variable Creation */
 var conn = mysql.createConnection({
     database: 'API',
-    user: 'admin',
+    user: 'adminremote',
     password: 'Passw0rd@123',
     host: 'rajeapi.tk',
     multipleStatements: true
