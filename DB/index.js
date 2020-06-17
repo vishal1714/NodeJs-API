@@ -5,7 +5,7 @@ var conn = mysql.createConnection({
     database: 'API',
     user: 'adminremote',
     password: 'Passw0rd@123',
-    host: 'rajeapi.tk',
+    host: '134.209.152.122',
     multipleStatements: true
 })
 
