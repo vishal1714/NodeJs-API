@@ -2,23 +2,15 @@ const mysql = require('mysql');
 
 /* DB Connection Variable Creation */
 var conn = mysql.createConnection({
-    database: 'u634557015_world',
-    user: 'u634557015_world',
-    password: '@oKKeEC0',
-    host: '185.210.145.52',
+    database: 'API',
+    user: 'admin',
+    password: 'Passw0rd@123',
+    host: 'rajeapi.tk',
     multipleStatements: true
 })
 
 
 /* DB Connection Raspi  192.168.0.13
-
-var conn = mysql.createConnection({
-    database: 'API',
-    user: 'admin',
-    host: 'localhost',
-    multipleStatements: true
-})
- 
 var conn = mysql.createConnection({
     database: 'API',
     user: 'admin',
