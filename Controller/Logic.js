@@ -1,7 +1,14 @@
+
 const conn = require("../DB");
 const dateFormat = require("dateformat");
-
+const Logger = require("./Logger");
 const ValidKey = "Vishal1714";
+const uuid = require("uuid");
+
+const logger = new Logger();
+
+logger.on('APILog',(Refno,req,resp) => { console.log("Done")
+                });
 
 //GET Logiv for Displaying all Citys with City Count
 exports.GET_AllCitys = (req, resp, next) => {
@@ -13,15 +20,19 @@ exports.GET_AllCitys = (req, resp, next) => {
             var Count = result.length;
             console.log(Count);
             resp.status(200).json({
+				RefNo: Refno,
                 TotalCityCount: Count,
                 Citys: result,
             });
+			
         }
     });
 }
 
-//GET Logic for Displaying City By using City ID 
+//GET Logic for Displaying City By using City ID
 exports.GET_CityByID = (req, resp, next) => {
+	// Refno
+    var Refno = uuid.v4();
     conn.query(
         "SELECT * FROM city WHERE id = ?",
         [req.params.id],
@@ -34,6 +45,7 @@ exports.GET_CityByID = (req, resp, next) => {
             } else {
                 resp.json(result[0]);
             }
+logger.log(Refno,req,resp);
         }
     );
 }
@@ -43,6 +55,8 @@ exports.GET_CityBy_CityName_CountryCode = (req, resp, next) => {
     //const queryObject = url.parse(req.url,true).query;
     //var CC = queryObject.CountryCode;
     //let CC = JSON.stringify(req.query.CountryCode);
+	// Refno
+    var Refno = uuid.v4();
     var CC = req.query.CountryCode;
     var CN = req.query.CityName;
     var sql = "SELECT * FROM city WHERE CountryCode = ?";
@@ -56,6 +70,7 @@ exports.GET_CityBy_CityName_CountryCode = (req, resp, next) => {
                 var Count = result.length;
                 console.log(Count);
                 resp.status(200).json({
+					RefNo: Refno,
                     CountryCode: CC,
                     City_Count: Count,
                     Time: day,
@@ -95,6 +110,8 @@ exports.POST_AddCity = (req, resp, next) => {
         District: req.body.District,
         Population: req.body.Population,
     };
+    // Refno
+    var Refno = uuid.v4();
     // Variable for API Key Validation
     var reqKey = req.header("Key");
     var ValidKey = "Vishal1714";
@@ -105,16 +122,17 @@ exports.POST_AddCity = (req, resp, next) => {
             //console.log(err);
             if (err) {
                 next(new Error("Kindly POST Correct JSON request with all required Details"))
-                /* 
+                /*
                 resp.status(500).json({
                     error: " ",
                     Info: err,
                 });
-                console.log(day + "DB Error Post ==>" + JSON.stringify(err)); 
+                console.log(day + "DB Error Post ==>" + JSON.stringify(err));
                 */
             } else {
                 var day = dateFormat(new Date(), "yyyy-mm-dd h:MM:ss TT");
                 resp.status(201).json({
+					RefNo: Refno,
                     Status: "S",
                     Time: day,
                     Inserted: addcity,
@@ -126,6 +144,7 @@ exports.POST_AddCity = (req, resp, next) => {
                     })*/
             }
         });
+			logger.log(Refno,req,resp);
     } else {
         //If API Key is Invalid
         //next(new Error("Invalid API Key"));
@@ -141,6 +160,8 @@ exports.POST_AddCity = (req, resp, next) => {
 exports.DEL_CityByID = (req, resp, next) => {
     //API Key Validation varibale
     var reqKey = req.header("Key");
+    // Refno
+    var Refno = uuid.v4();
     //Key Validation
     if (reqKey == ValidKey) {
         //Finding City ID is exist or not
@@ -165,6 +186,7 @@ exports.DEL_CityByID = (req, resp, next) => {
                                 console.log(err);
                             } else {
                                 resp.status(200).json({
+									RefNo: Refno,
                                     Status: "S",
                                     Time: day,
                                     Info: result[0],
@@ -175,6 +197,7 @@ exports.DEL_CityByID = (req, resp, next) => {
                 }
             }
         );
+			logger.log(Refno,req,resp);
     } else {
         //If API Key is Invalid
         //next(new Error("Invalid API Key"));
@@ -196,6 +219,9 @@ exports.PATCH_UpdateCityByID = (req, resp, next) => {
         Population: req.body.Population,
     };
     var sqlq = "UPDATE city SET ? WHERE id = ?";
+	
+	// Refno
+    var Refno = uuid.v4();
     //Key Validation
     if (reqKey == ValidKey) {
         conn.query(sqlq, [updateCity, req.body.ID], (err, result) => {
@@ -206,6 +232,7 @@ exports.PATCH_UpdateCityByID = (req, resp, next) => {
             } else {
                 var day = dateFormat(new Date(), "yyyy-mm-dd h:MM:ss TT");
                 resp.status(200).json({
+					RefNo: Refno,
                     Status: "S",
                     Time: day,
                     ID: req.body.ID,
@@ -213,6 +240,7 @@ exports.PATCH_UpdateCityByID = (req, resp, next) => {
                 });
             }
         });
+		logger.log(Refno,req,resp);
     } else {
         //If API Key is Invalid
         //next(new Error("Invalid API Key"));
