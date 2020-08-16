@@ -8,6 +8,8 @@ services:
       - '5003:5003'
     depends_on:
       - mysql  
+    links:
+      - mysql
   mysql:
     image: mysql:latest
     container_name: dev_mysql
