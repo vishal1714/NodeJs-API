@@ -1,0 +1,8 @@
+version : '3'
+
+services:
+  webapp:
+    container_name: cityapi
+    build: .
+    ports:
+      - '5003:5003'
