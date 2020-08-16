@@ -16,7 +16,7 @@ services:
       MYSQL_USER: user
       MYSQL_PASSWORD: user
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: default_schema
+      MYSQL_DATABASE: API
     ports:
       - 3306:3306
     volume:
