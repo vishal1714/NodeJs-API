@@ -19,8 +19,8 @@ services:
       MYSQL_DATABASE: API
     ports:
       - 3306:3306
-    volume:
-      - mysqldata:/var/lib/mysql
+    volumes:
+      - /mysqldata:/var/lib/mysql
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     container_name: dev_pma
