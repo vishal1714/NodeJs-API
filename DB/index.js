@@ -5,7 +5,7 @@ var conn = mysql.createConnection({
     database: 'API',
     user: 'user',
     password: 'user',
-    host: 'localhost',
+    host: 'mysql',
     multipleStatements: true
 })
 
