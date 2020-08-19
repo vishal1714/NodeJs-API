@@ -96,7 +96,7 @@ exports.POST_AddCity = (req, resp, next) => {
         Population: req.body.Population,
     };
     // Variable for API Key Validation
-    var reqKey = req.header("Key");
+    var reqKey = req.header("API-Key");
     var ValidKey = "Vishal1714";
 
     //Adding City Login
@@ -140,7 +140,7 @@ exports.POST_AddCity = (req, resp, next) => {
 // Delete Logic for Deleting City By City ID
 exports.DEL_CityByID = (req, resp, next) => {
     //API Key Validation varibale
-    var reqKey = req.header("Key");
+    var reqKey = req.header("API-Key");
     //Key Validation
     if (reqKey == ValidKey) {
         //Finding City ID is exist or not
@@ -188,7 +188,7 @@ exports.DEL_CityByID = (req, resp, next) => {
 
 // Update Logic for Updating City Details using Request JSON Body
 exports.PATCH_UpdateCityByID = (req, resp, next) => {
-    var reqKey = req.header("Key");
+    var reqKey = req.header("API-Key");
     const updateCity = {
         Name: req.body.Name,
         CountryCode: req.body.CountryCode,
