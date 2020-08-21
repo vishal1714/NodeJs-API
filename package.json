@@ -12,6 +12,7 @@
     "body-parser": "^1.19.0",
     "dateformat": "^3.0.3",
     "express": "^4.17.1",
+    "moment": "^2.27.0",
     "morgan": "^1.10.0",
     "mysql": "^2.18.1",
     "nodemon": "^2.0.4"
