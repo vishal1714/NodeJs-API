@@ -14,15 +14,16 @@ services:
     image: mysql:latest
     container_name: dev_mysql
     restart: always
+    command: --default-authentication-plugin=mysql_native_password
     environment:
       MYSQL_USER: user
       MYSQL_PASSWORD: user
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: API
     ports:
-      - 3307:3306
+      - 3306:3306
     volumes:
-      - ./root/mysqldata:/var/lib/mysql
+      - /root/mysqldata:/var/lib/mysql
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     container_name: dev_pma
