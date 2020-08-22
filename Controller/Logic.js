@@ -10,10 +10,12 @@ exports.GET_AllCitys = (req, resp, next) => {
       //console.log(err);
       next(new Error(err));
     } else {
+      var m = moment().tz('Asia/Kolkata').format('MMMM Do YYYY, hh:mm:ss A');
       var Count = result.length;
       console.log(Count);
       resp.status(200).json({
         TotalCityCount: Count,
+        FetchAt: m;
         Citys: result,
       });
     }
