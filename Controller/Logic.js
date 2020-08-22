@@ -15,7 +15,7 @@ exports.GET_AllCitys = (req, resp, next) => {
       console.log(Count);
       resp.status(200).json({
         TotalCityCount: Count,
-        FetchAt: m;
+        FetchAt: m,
         Citys: result,
       });
     }
