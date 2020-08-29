@@ -24,7 +24,7 @@ services:
     ports:
       - 3306:3306
     volumes:
-      - /root/mysqldata:/var/lib/mysql
+      - /root/Mysqldata:/var/lib/mysql
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     container_name: dev_pma
