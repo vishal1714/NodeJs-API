@@ -6,7 +6,7 @@ services:
     build: .
     restart: always
     ports:
-      - '6000:5001'
+      - '5006:5001'
     depends_on:
       - mysql  
     links:
