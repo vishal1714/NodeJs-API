@@ -6,7 +6,7 @@ services:
     build: .
     restart: always
     ports:
-      - '5006:5006'
+      - '5011:5001'
     depends_on:
       - mysql  
     links:
@@ -36,4 +36,4 @@ services:
       PMA_ARBITRARY: 0
     restart: always
     ports:
-      - 8081:80
+      - 8092:80
